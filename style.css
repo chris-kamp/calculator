@@ -1,0 +1,24 @@
+#grid-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    grid-template-areas: 
+        "display display display display"
+        "button button button button"
+        "button button button button"
+        "button button button button"
+        "button button button button";
+    width: 100px;
+    height: 200px;
+    background-color: gray;
+}
+
+#display {
+    grid-area: display;
+    text-align: right;
+    background-color: gray;
+    margin: 0;
+    padding: 1em 0.5em 0 0;
+    height: 2em;
+    border-radius: 10px 10px 0 0;
+}
