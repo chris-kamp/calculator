@@ -9,21 +9,31 @@
         "button button button button"
         "button button button button"
         "clear clear clear clear";
-    width: 100px;
+    width: 200px;
     height: 200px;
-    background-color: gray;
+    background-color: rgb(153, 104, 153);
+    border-radius: 10px 10px 0 0;
 }
 
 #display {
     grid-area: display;
     text-align: right;
-    background-color: gray;
     margin: 0;
     padding: 1em 0.5em 0 0;
     height: 2em;
-    border-radius: 10px 10px 0 0;
 }
 
 #clear {
     grid-area: clear;
+}
+
+button {
+    background-color: rgb(116, 56, 116);
+    border: solid 1px;
+    border-color: #101010;
+    padding: 1em 1em;
+    margin: 0;
+    text-decoration: none;
+    font-family: sans-serif;
+    cursor: pointer;
 }
