@@ -146,6 +146,8 @@ function pushOperator(e) {
         const answer = operate(+args.firstArg, +args.secondArg, args.operation);
         args.firstArg = answer;
         args.secondArg = null;
+    } else if (args.firstArg === ".") {
+        args.firstArg = "0";
     }
         args.operation = operator;
         updateDisplay();
@@ -190,7 +192,10 @@ function pushDecimal() {
         args.secondArg += ".";
     }
     else if (args.operation) {
-        args.secondArg = "0.";
+        args.secondArg = ".";
+    }
+    else if (args.firstArg === "0") {
+        args.firstArg = ".";
     }
     else if (!hasDecimal(args.firstArg)) {
         args.firstArg += ".";
