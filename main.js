@@ -1,8 +1,9 @@
-//Variables to store the first argument, second argument and operation to be performed
+//Variables to store the first argument, second argument, operation to be performed and final resulting answer.
 const args = {
     firstArg: "0",
     secondArg: null,
-    operation: null
+    operation: null,
+    answer: null
 }
 
 
@@ -86,29 +87,60 @@ opButtons.forEach(button => {
 
 //Clear button clears display on click
 const clearButton = document.querySelector("#clear");
-clearButton.addEventListener("click", clear);
+clearButton.addEventListener("click", () => {
+    clear();
+    updateDisplay();
+});
 
+//Equals button generates an answer on click
+const equalsButton = document.querySelector("#equals");
+equalsButton.addEventListener("click", generateAnswer);
+function generateAnswer() {
+    if(args.secondArg) {
+        args.answer = operate(+args.firstArg, +args.secondArg, args.operation);
+        updateDisplay();
+    }
+}
+
+//A function to convert an answer to an argument to be operated upon
+function answerToArg() {
+    const answer = args.answer;
+    clear();
+    args.firstArg = answer;
+}
+
+//Get a reference to the display field
 const display = document.querySelector("#display");
-
 //A function to update the display
 function updateDisplay() {
-    displayString = args.firstArg;
-    if(args.operation) {displayString += idToOutput[args.operation]}; //This will need to be the symbol, not the name of the operation
-    if(args.secondArg) {displayString += args.secondArg};
+    if(args.answer) {
+        displayString = args.answer;
+    } else {
+        displayString = args.firstArg;
+        if(args.operation) {
+            displayString += idToOutput[args.operation]
+        }; 
+        if(args.secondArg) {
+            displayString += args.secondArg
+        };
+    }
     display.textContent = displayString;
 }
 
-//A function to clear the display
+//A function to clear all args
 function clear() {
     args.firstArg = "0";
     args.secondArg = null;
     args.operation = null;
-    updateDisplay();
+    args.answer = null;
 }
 
-//An event listener function to append a number to the display when
-//its key is pressed
+//An event listener function to append a number to the display when its key is pressed
 function pushNumber(e) {
+    //If there is an answer, it should be cleared and replaced with the number pressed
+    if(args.answer) {
+        clear();
+    }
     const arg = args.operation ? "secondArg" : "firstArg";
     const number = idToOutput[e.target.id];
     if (args[arg] === "0" || args[arg] === null) {
@@ -123,6 +155,10 @@ function pushNumber(e) {
 
 //An event listener function to append an operator to the display (after performing an operation on the current arguments if all are present)
 function pushOperator(e) {
+    //If there is an answer, it should be converted to an arg to be operated upon
+    if(args.answer) {
+        answerToArg();
+    }
     const operator = e.target.id;
     if(args.secondArg) {
         const answer = operate(+args.firstArg, +args.secondArg, args.operation);
