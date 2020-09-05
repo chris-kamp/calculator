@@ -126,10 +126,9 @@ function pushNumber(e) {
     }
     const arg = args.operation ? "secondArg" : "firstArg";
     const number = idToOutput[e.target.id];
-    if (args[arg] === "0" || args[arg] === null) {
-        if(number !== "0") {
-            args[arg] = number; //Needs to refuse leading zero in second arg
-        }
+    //If the arg is equal to 0 or is null, set the arg equal to the number pressed.
+    if(args[arg] === "0" || args[arg] === null) {
+        args[arg] = number;
     } else {
         args[arg] += number;
     }
