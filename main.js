@@ -89,7 +89,7 @@ opButtons.forEach(button => {
 function answerToArg() {
     const answer = args.answer;
     clear();
-    args.firstArg = answer;
+    args.firstArg = answer.toString();
 }
 
 //Get a reference to the display field
@@ -145,7 +145,7 @@ function pushOperator(e) {
     if(args.secondArg) {
         args.secondArg = clearTrailingDecimal(args.secondArg);
         const answer = operate(+args.firstArg, +args.secondArg, args.operation);
-        args.firstArg = answer;
+        args.firstArg = answer.toString();
         args.secondArg = null;
     } else if (args.firstArg === ".") {
         args.firstArg = "0";
