@@ -143,14 +143,27 @@ function pushOperator(e) {
     }
     const operator = e.target.id;
     if(args.secondArg) {
+        args.secondArg = clearTrailingDecimal(args.secondArg);
         const answer = operate(+args.firstArg, +args.secondArg, args.operation);
         args.firstArg = answer;
         args.secondArg = null;
     } else if (args.firstArg === ".") {
         args.firstArg = "0";
+    } else {
+        args.firstArg = clearTrailingDecimal(args.firstArg);
     }
         args.operation = operator;
         updateDisplay();
+}
+
+//A function to clear a trailing decimal point before an operator
+function clearTrailingDecimal(arg) {
+    const trailingDecimal = /\.$/
+    if(arg.search(trailingDecimal) !== -1) {
+        return(arg.slice(0, -1));
+    } else {
+        return arg;
+    }
 }
 
 //Clear button clears display on click
@@ -165,6 +178,7 @@ const equalsButton = document.querySelector("#equals");
 equalsButton.addEventListener("click", generateAnswer);
 function generateAnswer() {
     if(args.secondArg) {
+        args.secondArg = clearTrailingDecimal(args.secondArg);
         args.answer = operate(+args.firstArg, +args.secondArg, args.operation);
         updateDisplay();
     }
