@@ -85,23 +85,6 @@ opButtons.forEach(button => {
 });
 
 
-//Clear button clears display on click
-const clearButton = document.querySelector("#clear");
-clearButton.addEventListener("click", () => {
-    clear();
-    updateDisplay();
-});
-
-//Equals button generates an answer on click
-const equalsButton = document.querySelector("#equals");
-equalsButton.addEventListener("click", generateAnswer);
-function generateAnswer() {
-    if(args.secondArg) {
-        args.answer = operate(+args.firstArg, +args.secondArg, args.operation);
-        updateDisplay();
-    }
-}
-
 //A function to convert an answer to an argument to be operated upon
 function answerToArg() {
     const answer = args.answer;
@@ -169,6 +152,54 @@ function pushOperator(e) {
         updateDisplay();
 }
 
+//Clear button clears display on click
+const clearButton = document.querySelector("#clear");
+clearButton.addEventListener("click", () => {
+    clear();
+    updateDisplay();
+});
+
+//Equals button generates an answer on click
+const equalsButton = document.querySelector("#equals");
+equalsButton.addEventListener("click", generateAnswer);
+function generateAnswer() {
+    if(args.secondArg) {
+        args.answer = operate(+args.firstArg, +args.secondArg, args.operation);
+        updateDisplay();
+    }
+}
+
+//A function to check whether an argument contains a decimal
+function hasDecimal(arg) {
+    const decimal = /\./;
+    if (arg.search(decimal) === -1) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
+//Decimal button inserts a decimal into the relevant argument on click
+const decimalButton = document.querySelector("#decimal");
+decimalButton.addEventListener("click", pushDecimal);
+function pushDecimal() {
+    //If there is an answer, clear the calculator first
+    if (args.answer) {
+        clear();
+    }
+    if (args.secondArg && !hasDecimal(args.secondArg)) {
+        args.secondArg += ".";
+    }
+    else if (args.operation) {
+        args.secondArg = "0.";
+    }
+    else if (!hasDecimal(args.firstArg)) {
+        args.firstArg += ".";
+    } else {
+        return;
+    }
+    updateDisplay();
+}
 
 
 
