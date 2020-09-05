@@ -133,27 +133,6 @@ function pushOperator(e) {
         updateDisplay();
 }
 
-//A function to run 
 
 
-/* 
-?Need to deal with situation where equals has been pressed and there is an answer present. New presses do what - replace?
 
-Display string is initially 0
-When you press a number key:
-    -If "operation" is truthy, update the second arg, otherwise update the first arg
-    -If the arg is "0", replace the arg with the number pressed
-    -If the arg is null, replace the arg with the number pressed, unless the number pressed is 0, in which case do nothing
-    -Otherwise, append the number pressed to the arg
-    -Then, update the display
-When you press an operator key:
-    -If second arg is truthy (which implies there is a first arg and an operator already):  
-        -Operate on first arg, second arg, operator
-        -Set first arg equal to the result
-        -Set second arg to null
-        -Set operation to the pressed operator key
-        -Update the display
-    -If second arg is falsy:
-        -Set operation to the pressed operator key
-        -Update the display
-*/
