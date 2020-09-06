@@ -9,9 +9,10 @@
         "button button button button"
         "button button button button"
         "clear clear clear clear";
-    width: 220px;
-    height: 270px;
-    background-color: rgb(153, 104, 153);
+    width: 300px;
+    height: 400px;
+    /* background-color: rgb(153, 104, 153); */
+    background-color: rgb(122,75,177);
     border-radius: 10px 10px 10px 10px;
     box-shadow: 5px 5px 8px rgb(59, 40, 59);
     border: solid 3px;
@@ -21,10 +22,15 @@
 #display {
     grid-area: display;
     text-align: right;
-    margin: 0;
-    padding: 1em 0.5em 0 0;
-    height: 2em;
-    
+    margin: 8px 8px 0 8px;
+    padding: 18px 6px 18px 0;
+    height: 16px;
+    /* background-color: #8C588C; */
+    background-color: rgba(195, 136, 218, 0.596);
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 20px;
+    color: #39134C;
 }
 
 #clear {
@@ -33,12 +39,21 @@
 }
 
 button {
-    background-color: rgb(116, 56, 116);
+    /* background-color: rgb(116, 56, 116); */
+    background-color: rgb(56, 14, 54);
     border: solid 1px;
     border-color: #101010;
-    padding: 1em 1em;
-    margin: 0;
+    padding: 10px 10px;
+    margin: 2px;
     text-decoration: none;
     font-family: sans-serif;
     cursor: pointer;
+    border-radius: 25%;
+    font-weight: bold;
+    font-size: 20px;
+    color: rgb(195,136,218);
+}
+
+.topRow {
+
 }
