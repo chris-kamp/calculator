@@ -1,3 +1,7 @@
+body {
+    background-color: #b6a1d1f8;
+}
+
 #grid-container {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -17,6 +21,10 @@
     box-shadow: 5px 5px 8px rgb(59, 40, 59);
     border: solid 6px;
     border-color: rgb(83, 56, 83);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -300px 0 0 -150px;
 }
 
 #display {
