@@ -130,6 +130,10 @@ function pushNumber(e) {
     if(args[arg] === "0" || args[arg] === null) {
         args[arg] = number;
     } else {
+        //Do not allow args longer than 10 characters
+        if(args[arg].length >= 10) {
+            return;
+        }
         args[arg] += number;
     }
     updateDisplay();
