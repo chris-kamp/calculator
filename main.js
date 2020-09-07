@@ -6,6 +6,8 @@ const args = {
     answer: null
 }
 
+//The maximum string length of an argument
+const MAX_ARG_LENGTH = 14;
 
 //add two given numbers
 function add(a, b) {
@@ -26,7 +28,7 @@ function multiply(a, b) {
 //division by zero gives an error
 function divide(a, b) {
     if(b === 0) {
-        return "ERROR! You can't divide by zero."
+        return "ERROR (Divide by 0)"
     }
     else {
         return a / b;
@@ -130,8 +132,8 @@ function pushNumber(e) {
     if(args[arg] === "0" || args[arg] === null) {
         args[arg] = number;
     } else {
-        //Do not allow args longer than 14 characters
-        if(args[arg].length >= 14) {
+        //Do not allow args longer than MAX_ARG_LENGTH characters
+        if(args[arg].length >= MAX_ARG_LENGTH) {
             return;
         }
         args[arg] += number;
@@ -148,7 +150,7 @@ function pushOperator(e) {
     const operator = e.target.id;
     if(args.secondArg) {
         args.secondArg = clearTrailingDecimal(args.secondArg);
-        const answer = operate(+args.firstArg, +args.secondArg, args.operation);
+        const answer = roundAnswer(operate(+args.firstArg, +args.secondArg, args.operation));
         args.firstArg = answer.toString();
         args.secondArg = null;
     } else if (args.firstArg === ".") {
@@ -183,7 +185,7 @@ equalsButton.addEventListener("click", generateAnswer);
 function generateAnswer() {
     if(args.secondArg) {
         args.secondArg = clearTrailingDecimal(args.secondArg);
-        args.answer = operate(+args.firstArg, +args.secondArg, args.operation);
+        args.answer = roundAnswer(operate(+args.firstArg, +args.secondArg, args.operation));
         updateDisplay();
     }
 }
@@ -223,5 +225,27 @@ function pushDecimal() {
     updateDisplay();
 }
 
-
-
+//Round a given number such that, when converted to a string, it is no more than MAX_ARG_LENGTH characters long. 
+//Give an error message if the number exceeds the max safe value.
+function roundAnswer(ans) {
+    //If number exceeds max safe value, give an error message
+    if(ans > Number.MAX_SAFE_INTEGER) {
+        return "ERROR (Number too big)";
+    }
+    const ansString = ans.toString();
+    const decimalIndex = ansString.indexOf(".");
+    if(ansString.length > MAX_ARG_LENGTH && decimalIndex !== -1) {
+        const eIndex = ansString.indexOf("e");
+        const tailLength = (eIndex === -1) ? 0 : ansString.slice(eIndex).length;
+        const integralLength = decimalIndex + 1;
+        //If length up to and including decimal + length of "e notation" portion is equal to or greater than max length, simply round the answer to a whole number.
+        if(integralLength + tailLength >= MAX_ARG_LENGTH) {
+            return Math.round(ans);
+        } else {
+            const decimalPlaces = MAX_ARG_LENGTH - (integralLength + tailLength);
+            return ans.toFixed(decimalPlaces);
+        }
+    } else {
+        return ans;
+    }
+}
