@@ -56,6 +56,7 @@ let keyToID = {
     "Enter": "equals",
     ".": "decimal",
     "Escape": "clear",
+    "Backspace": "backspace",
 }
 
 //Functions to perform mathematical operations on two given arguments
@@ -115,7 +116,7 @@ function clear() {
     args.answer = null;
 }
 
-//When a key is pressed, call pushButton on the ID of the associated button (if any)
+//When a keyboard key is pressed, call pushButton on the ID of the associated button (if any)
 window.addEventListener("keydown", keyToButton);
 
 function keyToButton(e) {
@@ -147,6 +148,9 @@ function pushButton(id) {
         updateDisplay();
     } else if (id === "decimal") {
         pushDecimal();
+    } else if (id === "backspace") {
+        backspace();
+        updateDisplay();
     }
 }
 
@@ -215,6 +219,22 @@ function generateAnswer() {
     if(args.secondArg) {
         args.secondArg = clearTrailingDecimal(args.secondArg);
         args.answer = roundAnswer(operate(+args.firstArg, +args.secondArg, args.operation));
+    }
+}
+
+//When the backspace button is activated, remove the last character (or clear a displayed answer)
+function backspace() {
+    console.log("test");
+    if(args.answer) {
+        clear();
+    } else if(args.secondArg) {
+        args.secondArg = (args.secondArg.length > 1) ? args.secondArg.slice(0, -1) : null;
+    } else if(args.operation) {
+        args.operation = null;
+    } else if (args.firstArg.length > 1) {
+        args.firstArg = args.firstArg.slice(0, -1);
+    } else {
+        clear();
     }
 }
 
