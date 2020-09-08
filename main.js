@@ -73,18 +73,76 @@ let idToOutput = {
     divide: "\u00F7",
 };
 
-//Get an array containing all of the number buttons and add an event listener
+//An object containing a dictionary of keys and the ID of the associated button
+let keyToID = {
+    "0": "n0",
+    "1": "n1",
+    "2": "n2",
+    "3": "n3",
+    "4": "n4",
+    "5": "n5",
+    "6": "n6",
+    "7": "n7",
+    "8": "n8",
+    "9": "n9",
+    "+": "add",
+    "-": "subtract",
+    "*": "multiply",
+    "/": "divide",
+    "=": "equals",
+    "Enter": "equals",
+    ".": "decimal",
+    "Escape": "clear",
+}
+
+//Get an array containing all of the number buttons and add event listeners
 const numButtons = Array.from(document.querySelectorAll(".numButton"));
 
 numButtons.forEach(button => {
-    button.addEventListener("click", pushNumber);
+    button.addEventListener("click", (e) => {
+        pushButton(e.target.id);
+    });
 })
+
+//Add an event listener for keypresses
+window.addEventListener("keydown", keyToButton);
+
+//Get an array containing all buttons
+const buttons = Array.from(document.querySelectorAll("button"));
+
+//A function to get a button from a key press
+function keyToButton(e) {
+    const id = keyToID[e.key];
+    pushButton(id);
+}
+
+//A function to activate a button given its ID
+//TODO: Refactor this with an object
+function pushButton(id) {
+    const button = document.getElementById(id);
+    if(button.classList.contains("numButton")) {
+        pushNumber(id);
+    } else if (button.classList.contains("opButton")) {
+        pushOperator(id);
+    } else if(id === "clear") {
+        clear();
+        updateDisplay();
+    } else if (id === "equals") {
+        generateAnswer();
+        updateDisplay();
+    } else if (id === "decimal") {
+        pushDecimal();
+    }
+}
 
 //Get an array containing the operator buttons and add an event listener
 const opButtons = Array.from(document.querySelectorAll(".opButton"));
 opButtons.forEach(button => {
-    button.addEventListener("click", pushOperator);
+    button.addEventListener("click", () => {
+        pushButton(e.target.id);
+    });
 });
+
 
 
 //A function to convert an answer to an argument to be operated upon
@@ -121,13 +179,13 @@ function clear() {
 }
 
 //An event listener function to append a number to the display when its key is pressed
-function pushNumber(e) {
+function pushNumber(id) {
     //If there is an answer, it should be cleared and replaced with the number pressed
     if(args.answer) {
         clear();
     }
     const arg = args.operation ? "secondArg" : "firstArg";
-    const number = idToOutput[e.target.id];
+    const number = idToOutput[id];
     //If the arg is equal to 0 or is null, set the arg equal to the number pressed.
     if(args[arg] === "0" || args[arg] === null) {
         args[arg] = number;
@@ -142,12 +200,12 @@ function pushNumber(e) {
 }
 
 //An event listener function to append an operator to the display (after performing an operation on the current arguments if all are present)
-function pushOperator(e) {
+function pushOperator(id) {
     //If there is an answer, it should be converted to an arg to be operated upon
     if(args.answer) {
         answerToArg();
     }
-    const operator = e.target.id;
+    const operator = id;
     if(args.secondArg) {
         args.secondArg = clearTrailingDecimal(args.secondArg);
         const answer = roundAnswer(operate(+args.firstArg, +args.secondArg, args.operation));
@@ -175,18 +233,21 @@ function clearTrailingDecimal(arg) {
 //Clear button clears display on click
 const clearButton = document.querySelector("#clear");
 clearButton.addEventListener("click", () => {
-    clear();
-    updateDisplay();
+    pushButton("clear");
 });
 
 //Equals button generates an answer on click
+//TODO: Refactor so all buttons have the same event listener
 const equalsButton = document.querySelector("#equals");
-equalsButton.addEventListener("click", generateAnswer);
+equalsButton.addEventListener("click", () => {
+    pushButton("equals");
+});
+
+//A function to generate an answer from two args and an operator
 function generateAnswer() {
     if(args.secondArg) {
         args.secondArg = clearTrailingDecimal(args.secondArg);
         args.answer = roundAnswer(operate(+args.firstArg, +args.secondArg, args.operation));
-        updateDisplay();
     }
 }
 
@@ -202,7 +263,9 @@ function hasDecimal(arg) {
 
 //Decimal button inserts a decimal into the relevant argument on click
 const decimalButton = document.querySelector("#decimal");
-decimalButton.addEventListener("click", pushDecimal);
+decimalButton.addEventListener("click", () => {
+    pushButton("decimal");
+});
 function pushDecimal() {
     //If there is an answer, clear the calculator first
     if (args.answer) {
