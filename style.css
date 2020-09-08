@@ -15,7 +15,6 @@ body {
         "clear clear clear clear";
     width: 320px;
     height: 400px;
-    /* background-color: rgb(153, 104, 153); */
     background-color: rgb(122,75,177);
     border-radius: 10px 10px 10px 10px;
     box-shadow: 5px 5px 8px rgb(59, 40, 59);
@@ -30,11 +29,9 @@ body {
 #display {
     grid-area: display;
     text-align: right;
-    /* margin: 8px 8px 0 8px; */
     margin: 5px 5px 0 5px;
     padding: 18px 10px 18px 0;
     height: 22px;
-    /* background-color: #8C588C; */
     background-color: #380e36a1;
     border-radius: 6px;
     font-weight: bold;
@@ -48,7 +45,6 @@ body {
 }
 
 button {
-    /* background-color: rgb(116, 56, 116); */
     background-color: #380e36;
     border: solid 1px;
     border-color: #101010;
@@ -61,8 +57,4 @@ button {
     font-weight: bold;
     font-size: 20px;
     color: #c3a8d3;
-}
-
-.topRow {
-
 }
