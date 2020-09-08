@@ -112,8 +112,10 @@ const buttons = Array.from(document.querySelectorAll("button"));
 
 //A function to get a button from a key press
 function keyToButton(e) {
-    const id = keyToID[e.key];
-    pushButton(id);
+    if(keyToID[e.key]) {
+        const id = keyToID[e.key];
+        pushButton(id);
+    }
 }
 
 //A function to activate a button given its ID
