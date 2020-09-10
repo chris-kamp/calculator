@@ -126,11 +126,11 @@ function keyToButton(e) {
     }
 }
 
-//When a button is clicked, call pushButton on its ID
+//When a button is clicked, call pushButton on its ID. Remove pressed style when transition ends.
 buttons.forEach(button => {
     button.addEventListener("click", e => {
         pushButton(e.target.id);
-    })
+    });
 })
 
 //Given a button ID, perform its associated operations
@@ -152,6 +152,7 @@ function pushButton(id) {
         backspace();
         updateDisplay();
     }
+    button.classList.add("pressed");
 }
 
 //When a number button is activated, push it to the relevant argument and update the display.

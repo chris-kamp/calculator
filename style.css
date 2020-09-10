@@ -63,4 +63,20 @@ button {
     font-weight: bold;
     font-size: 20px;
     color: #c3a8d3;
+    box-shadow: 1px 2px 2px rgb(0, 0, 0);
+    transition: all 0.1s ease;
 }
+
+button:hover {
+    background-color: #380e369d;
+}
+
+button:focus {
+    outline: none;
+    background-color: #380e369d;
+}
+
+button:active {
+    box-shadow: inset 0 1px 1px rgb(0, 0, 0);
+}
+
