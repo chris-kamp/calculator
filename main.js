@@ -93,7 +93,7 @@ function operate(a, b, operator) {
 
 //Update the display
 function updateDisplay() {
-    if(args.answer) {
+    if(args.answer !== null) {
         displayString = args.answer;
     } else {
         displayString = args.firstArg;
@@ -178,7 +178,7 @@ function pushButton(id) {
 
 //When a number button is activated, push it to the relevant argument and update the display.
 function pushNumber(id) {
-    if(args.answer) {
+    if(args.answer !== null) {
         clear();
     }
     const arg = args.operation ? "secondArg" : "firstArg";
@@ -218,7 +218,7 @@ function pushDecimal() {
 
 //When an operator button is activated, set it as the operation to be performed. If there is an existing operator and two arguments, first perform that operation.
 function pushOperator(id) {
-    if(args.answer) {
+    if(args.answer !== null) {
         answerToArg();
     }
     const operator = id;
@@ -247,7 +247,7 @@ function generateAnswer() {
 //When the backspace button is activated, remove the last character (or clear a displayed answer)
 function backspace() {
     console.log("test");
-    if(args.answer) {
+    if(args.answer !== null) {
         clear();
     } else if(args.secondArg) {
         args.secondArg = (args.secondArg.length > 1) ? args.secondArg.slice(0, -1) : null;
