@@ -125,12 +125,34 @@ function keyToButton(e) {
     }
 }
 
-//When a button is clicked, call pushButton on its ID. Remove pressed style when transition ends.
+//Add event handlers to each button
 buttons.forEach(button => {
+    //Call pushButton on click
     button.addEventListener("click", e => {
         pushButton(e.target.id);
+        removeFocusEffect(e.target);
+    });
+    //Give visual effects on focus (separated from actual focus for accessibility reasons)
+    button.addEventListener("focus", (e) => {
+        if(!(e.target.classList.contains("pseudofocus"))) {
+            e.target.classList.add("pseudofocus");
+        }
+    });
+    //Remove visual effects on unfocus
+    button.addEventListener("blur", (e) => {
+        if(e.target.classList.contains("pseudofocus")) {
+            removeFocusEffect(e.target);
+        }
     });
 })
+
+
+//Remove focus effects on a button (without affecting actual focus)
+function removeFocusEffect(button) {
+    if(button.classList.contains("pseudofocus")) {
+        button.classList.remove("pseudofocus");
+    }
+}
 
 //Given a button ID, perform its associated operations
 function pushButton(id) {
