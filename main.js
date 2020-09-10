@@ -53,7 +53,6 @@ let keyToID = {
     "*": "multiply",
     "/": "divide",
     "=": "equals",
-    "Enter": "equals",
     ".": "decimal",
     "Escape": "clear",
     "Backspace": "backspace",
